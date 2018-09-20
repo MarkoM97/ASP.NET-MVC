@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3th</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/JQuery autocomplete/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/JQuery autocomplete/jquery-ui.structure.min.css" />
+    <link rel="stylesheet" href="~/Content/JQuery autocomplete/jquery-ui.theme.min.css" />
+    
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Youtube xxx", "Index", "Video", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-form">
+                @using (Html.BeginForm("Index", "Video", FormMethod.Get, new { @style = "width:100%;margin-top:0.5em;padding:0;display:inline;" }))
+                {
+                    @Html.TextBox("SearchParam", "", new { @class = "form-control input-sm", @style = "display:inline;width:50%;", @placeholder = "Search", value = "Search" })<input class="btn btn-default btn-sm" type="submit" placeholder="Search" style="margin-left:1em;display:inline;" />
+                }
+
+                @* ========================================================================SEARCHING================================================================================ *@
+
+                @*<div class="input-group">
+                    <input type="text" class="form-control input-sm" aria-label="..." placeholder="Search">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filters <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">By user</li>
+                            <li class="dropdown-item"><input class="form-control input-sm" placeholder="Search video by user" style="margin:0 1em 0 1em;" /></li>
+
+                            <li class="dropdown-header"><br /><br />By upload date</li>
+                            <li class="dropdown-item"><input id="datePickerLowDate" class="form-control input-sm" data-provide="datepicker" placeholder="from" style="width:40%;margin-left:1em;" /></li>
+                            <li class="dropdown-item"><input id="datePickerHighDate" class="form-control input-sm" data-provide="datepicker" placeholder="to" style="width:40%;margin-right:1em;margin-left:1em;" /></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                </div><!-- /input-group -->
+                <button class="btn btn-default btn-sm">Submit</button>*@
+                @* =========================================================================SORTING================================================================================ *@
+                @*<div class="btn-group">
+                    <button id="navbarDropdownSort" class="btn btn-default btn-sm dropdown-toggle" role="button" data-toggle="dropdown" style="display:inline;">Sort <span class="glyphicon glyphicon-triangle-bottom" style="font-size:0.8em;"></span></button>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownSort" style="">
+                        <li id="sortByPopularitySubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By popularity</a></li>
+                        <li id="sortByRatingSubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By rating</a></li>
+                        <li id="sortByUploadDateSubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By upload date</a></li>
+                        @*<li class="dropdown-divider"><div class="divider"></div></li>*@
+                    @*</ul>
+                </div>*@
+
+                @* =================================================================================================================================================== *@
+
+                @* =======================================================================FILTERING================================================================================ *@
+                @*<div class="btn-group">
+                    <button id="navbarDropdownFilter" class="btn btn-default btn-sm dropdown-toggle" role="button" data-toggle="dropdown" style="display:inline;">Filter <span class="glyphicon glyphicon-triangle-bottom" style="font-size:0.8em;"></span></button>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownFilter" style="">
+                        <li class="dropdown-header">By user</li>
+                        <li class="dropdown-item" style="margin:0 1em 0 1em;"><input id="userFilterField" class="form-control input-sm" placeholder="Search video by user" /></li>
+
+                        <li class="dropdown-header">By date</li>
+                        <li class="dropdown-item" style="margin:0 1em 0 1em;"><div><input id="dateFilterLow" class="form-control input-sm" data-provide="datepicker" placeholder="from" style="display:inline;width:48%;" /><p style="display:inline;width:3%;">  </p><input id="dateFilterHigh" class="form-control input-sm" data-provide="datepicker" placeholder="to" style="display:inline;width:49%;" /></div></li>
+
+                        <li class="dropdown-divider"><div class="divider"></div></li>
+                        <li class="dropdown-item" style="margin:0 1em 1em 1em;"><button id="applyFilterSubmit" class="btn btn-default btn-sm" style="width:100%;">Filter</button></li>
+                    </ul>
+                </div>*@
+                @* ================================================================================================================================================================= *@
+
+
+                @*<div class="input-group">
+                    <input type="text" class="form-control input-sm" aria-label="..." placeholder="Search">
+                    <div class="input-group-btn" style="padding:5em;">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Filters <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">By user</li>
+                            <li class="dropdown-item"><input class="form-control input-sm" placeholder="Search video by user" style="margin:0 1em 0 1em;" /></li>
+
+                            <li class="dropdown-header"><br /><br />By upload date</li>
+                            <li class="dropdown-item"><input id="datePickerLowDate" class="form-control input-sm" data-provide="datepicker" placeholder="from" style="width:40%;margin-left:1em;" /></li>
+                            <li class="dropdown-item"><input id="datePickerHighDate" class="form-control input-sm" data-provide="datepicker" placeholder="to" style="width:40%;margin-right:1em;margin-left:1em;" /></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                </div><!-- /input-group -->*@
+
+
+
+            </div>
+            <div class="navbar-collapse collapse" style="margin-top:-3.3em;">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer></footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/Sorting_Filtering.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+    @*<script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/Autocomplete.js"></script>*@
+</body>
+</html>

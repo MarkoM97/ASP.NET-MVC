@@ -1,0 +1,88 @@
+﻿@model Youtube.Models.View_Models.VideoViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>video</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.video_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_icon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_icon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_views)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_views)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_comments_allowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_comments_allowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_user.user_username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_user.user_username)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

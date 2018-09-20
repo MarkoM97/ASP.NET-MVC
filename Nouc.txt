@@ -1,0 +1,115 @@
+UserName mora biti isti kao email
+
+
+
+
+
+
+
+create table roles(
+	role_id  tinyint identity(1,1) primary key not null,
+	role_name varchar(50) not null,
+)
+
+create table users(
+	users_id tinyint identity(1,1) primary key not null,
+	user_email varchar(100) unique not null,
+	user_username varchar(100) unique not null,
+	user_password varchar(100) not null,
+	user_icon varchar(500),
+	user_created datetime not null, 
+	user_banned bit not null,
+)
+create table users_role(
+	users_id tinyint foreign key references users(users_id),
+	role_id tinyint foreign key references roles(role_id),
+	primary key(users_id,role_id)
+)
+
+create table users_following (
+	user_following tinyint foreign key references users(users_id),
+	user_followed tinyint foreign key references users(users_id),
+	primary key(user_following, user_followed)
+)
+
+CREATE TABLE video(
+	video_id tinyint identity(1,1) primary key not null,
+	video_name varchar(200) unique not null,
+	video_description varchar(500) not null,
+	video_icon varchar(500) not null,
+	video_url varchar(500) not null,
+	video_user_id tinyint foreign key references users(users_id),
+	video_created datetime not null,
+	video_views tinyint not null,
+	video_comments_allowed bit not null,
+	video_banned bit not null
+)
+
+create table video_like_dislike (
+	video_id tinyint foreign key references video(video_id),
+	users_id tinyint foreign key references users(users_id),
+	is_like bit not null,
+	primary key (video_id, users_id)
+)
+
+CREATE TABLE comment(
+	comment_id  tinyint identity(1,1) primary key not null,
+	comment_content varchar(500) not null,
+	comment_created datetime not null,
+	comment_user_id tinyint FOREIGN KEY REFERENCES users(users_id),
+	comment_video_id tinyint foreign key references video(video_id),
+)
+
+CREATE TABLE comment_like_dislike(
+	comment_id tinyint foreign key references comment(comment_id),
+	users_id tinyint foreign key references users(users_id),
+	is_like bit not null,
+	primary key (comment_id, users_id)
+)
+
+
+
+
+
+INSERT INTO users VALUES('marko.martonosi@gmail.com', 'marko','Sinergy97!', '1.jpg','2018-01-01',  0);
+INSERT INTO users VALUES('nikolina@dgdf.com', 'nina','Sinergy97!', '2.jpg','2018-02-02', 0);
+INSERT INTO users VALUES('stefan@dsgfdg.com', 'stef','Sinergy97!', '3.jpg', '2018-03-03', 0);
+
+INSERT INTO roles VALUES('administrator');
+INSERT INTO roles VALUES('regular');
+
+INSERT INTO users_role VALUES(1,1);
+INSERT INTO users_role VALUES(2,1);
+INSERT INTO users_role VALUES(3,2);
+
+INSERT INTO users_following VALUES(2,1);
+INSERT INTO users_following VALUES(3,1);
+INSERT INTO users_following VALUES(3,2);
+INSERT INTO users_following VALUES(1,3);
+
+INSERT INTO video VALUES('first video', 'esc', '1.png', 'https://www.youtube.com/embed/X4hBofR_XSA', 1, '2018-05-05', 0, 1,0);
+INSERT INTO video VALUES('second video', 'esc', '2.png', 'https://www.youtube.com/embed/veJVYMz_2dI', 1, '2018-05-05', 0, 1,0);
+INSERT INTO video VALUES('third video', 'esc', '3.png', 'https://www.youtube.com/embed/etEhr7mkJYg', 1, '2018-05-05', 0, 1,0);
+
+INSERT INTO video_like_dislike VALUES(1,2,1);
+INSERT INTO video_like_dislike VALUES(2,1,1);
+INSERT INTO video_like_dislike VALUES(3,3,0);
+
+INSERT INTO comment VALUES('prvi komentar', '2018-06-18', 1, 1);
+INSERT INTO comment VALUES('drigi komentar', '2018-06-18', 2, 1);
+INSERT INTO comment VALUES('treci komentar', '2018-06-18', 2, 3);
+
+INSERT INTO comment_like_dislike VALUES(2,1,1);
+INSERT INTO comment_like_dislike VALUES(1,2,0);
+INSERT INTO comment_like_dislike VALUES(1,3,0);
+
+
+
+delete from video_like_dislike
+delete from comment_like_dislike
+delete from users_following
+delete from users_role
+delete from roles
+delete from comment
+delete from video
+delete from users

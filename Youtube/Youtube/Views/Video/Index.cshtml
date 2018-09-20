@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Youtube.Models.View_Models.VideoViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .input-xs {
+        height: 22px;
+        padding: 2px 5px;
+        font-size: 12px;
+        line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+        border-radius: 3px;
+    }
+
+</style>
+
+
+<div class="row" style="border-top:0.1px solid #e8e8e8;padding:1em;margin:6em 0 0 0;">
+    <div class="col-md-1"><h5 style="margin-top:-1.8em;background-color:white;padding:0.3em;opacity:0.8;">@Model.Count() results </h5></div>
+    <div class="col-md-9"></div>
+    <div class="col-md-2" style="text-align:center;">
+        <div class="btn-group" style="margin-top:-3.3em;background-color:white;padding:0.2em;">
+            <button id="navbarDropdownSort" class="btn btn-default btn-sm dropdown-toggle" role="button" data-toggle="dropdown" style="display:inline;"><span class="glyphicon glyphicon-sort" style="font-size:0.8em;"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownSort" style="">
+                <li id="sortByPopularitySubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By popularity</a></li>
+                <li id="sortByRatingSubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By rating</a></li>
+                <li id="sortByUploadDateSubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By upload date</a></li>
+                @*<li class="dropdown-divider"><div class="divider"></div></li>*@
+            </ul>
+        </div>
+
+
+        <div class="btn-group" style="margin-top:-3.3em;background-color:white;margin-left:0.5em;padding:0.2em;">
+            <button id="navbarDropdownFilter" class="btn btn-default btn-sm dropdown-toggle" role="button" data-toggle="dropdown" style="display:inline;"> <span class="glyphicon glyphicon-filter" style="font-size:0.8em;"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownFilter" style="">
+                <li class="dropdown-header">By user</li>
+                <li class="dropdown-item" style="margin:0 1em 0 1em;"><input id="userFilterField" class="form-control input-xs" placeholder="Search video by user" /></li>
+
+                <li class="dropdown-header">By date</li>
+                <li class="dropdown-item" style="margin:0 1em 0 1em;"><div><input id="dateFilterLow" class="form-control input-xs" data-provide="datepicker" placeholder="from" style="display:inline;width:48%;" /><input id="dateFilterHigh" class="form-control input-xs" data-provide="datepicker" placeholder="to" style="display:inline;width:49%;" /></div></li>
+
+                <li class="dropdown-divider"><div class="divider"></div></li>
+                <li class="dropdown-item" style="margin:0 1em 1em 1em;"><button id="applyFilterSubmit" class="btn btn-default btn-xs" style="width:100%;">Filter</button></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="AllVideoContainer" class="container-fluid" style="margin:0 0 2em 0;">
+    @foreach (var item in Model)
+    {
+        <div id="@item.video_id" uploadedVal="@item.video_created" ratingVal="@(item.video_likes - item.video_dislikes)" viewsVal="@item.video_views" class="videoContainer" style="position:relative;background-color:#fafafa;border-bottom:1px solid #e8e8e8;display:inline;float:left;padding-bottom:1em;box-shadow:1px 1px 15px #c8c8c8;width:11em;opacity:0.8;margin:0 0.5em 0 0;">
+            <a href="@Url.Action("Details", new { id = @Html.DisplayFor(model => item.video_id)})"><img id="@Html.DisplayFor(model => item.video_id)" class="VideoThumbnails" src="~/Content/VideoImages/@Html.DisplayFor(model => item.video_icon)" style="width:100%;position:absolute;margin:0 0.1em 0 0;height:6em;padding:0;z-index:1;" /></a>
+            @*<div id="@Html.DisplayFor(model => item.video_id)" class="VideoThumbnailsText" style="position:absolute;text-align:center;font-size:1.5em;font-weight:bold;color:#5f5f5f;visibility:hidden;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);z-index:-15;">@Html.DisplayFor(model => item.video_name)</div>*@
+            <h5 style="padding:0.1em 0;font-weight:bold;z-index:2;margin-top:6.5em;">@Html.DisplayFor(model => item.video_name)</h5>
+
+            <div class="row" style="margin:0;padding:0;text-align:center;">
+                <p style="margin:1em 0 0 0;padding:0;font-size:0.5em;">@Html.DisplayFor(model => item.video_views) Views</p>
+            </div>
+            <div class="row" style="margin:0;padding:0;text-align:center;">
+                <p style="margin:0;padding:0;font-size:0.5em;display:inline;">@item.video_created.Date.ToString("ddd MMM dd yyyy")</p>
+            </div>
+            <div class="row" style="margin:-1.5em 0 0 0;padding:0;text-align:center;">
+                @{
+                    if (item.video_user.user_icon == null)
+                    {
+                        <br /><img src="~/Content/UserPhotos/avatar.png" style="max-height:0.9em;display:inline;border:0.1px solid white;border-radius:50%;" />
+                    }
+                    else
+                    {
+                        <br /><img src="~/Content/UserPhotos/@item.video_user.user_icon" style="max-height:0.9em;display:inline;border:0.1px solid white;border-radius:50%;" />
+                    }
+                }
+                <p style="margin:0;padding:0;font-size:0.5em;display:inline;">@item.video_user.user_username</p>
+            </div>
+
+
+
+
+
+        </div>
+    }
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/Sorting_Filtering.js"></script>
+<script src="~/Scripts/FirstScript.js"></script>

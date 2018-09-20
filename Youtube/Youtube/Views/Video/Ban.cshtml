@@ -1,0 +1,120 @@
+﻿@model Youtube.Models.View_Models.VideoViewModel
+
+@{
+    ViewBag.Title = "Ban";
+}
+
+<h2>Ban</h2>
+
+<h3>Are you sure you want to ban this video?</h3>
+<div>
+    <h4>VideoViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.video_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_icon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_icon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_created_string)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_created_string)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_views)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_views)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_likes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_likes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_dislikes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_dislikes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.video_comments_allowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video_comments_allowed)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("BanConfirmed", "Video", new { id = Model.video_id }, FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

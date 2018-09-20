@@ -1,0 +1,249 @@
+﻿@using Microsoft.AspNet.Identity
+@using Youtube.Models.Model_Extensions
+@using Youtube.Models
+@model Youtube.Models.View_Models.VideoViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Youtube.Models.video_like_dislike vld = (Youtube.Models.video_like_dislike)ViewBag.LikeDislikeEntity;
+    List<Youtube.Models.comment_like_dislike> cld = (List<Youtube.Models.comment_like_dislike>)ViewBag.UserCommentLikeDislike;
+}
+
+
+
+@if (Model.video_banned)
+{
+    <div class="row" style="width:100%;height:100%;text-align:center;margin:20em 0 20em 0;">
+        <h2>THIS VIDEO IS BANNED!</h2>
+        @if(User.IsInRole("Admin"))
+        {
+            <button class="btn btn-default btn-sm" style="width:30%;" onclick="UnbanVideo()">Unban</button>
+        }
+    </div>
+}
+else
+{
+    <div class="row" style="margin-top:5em;">
+
+        <div class="col-md-3" style="height:auto;"></div>
+        <div class="col-md-6" style="padding:0;">
+            <div class="row" style="text-align:center;margin:0;padding:0;">
+                <iframe style="padding:0;" width="580" height="350" src="@Html.DisplayFor(model => model.video_url)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            <div class="row">
+                <div class="col-md-9"><h4>@Html.DisplayFor(model => model.video_name)</h4></div>
+                <div class="col-md-3" style="text-align:right;margin-top:0.5em;">
+                    @{
+                        if (vld != null)
+                        {
+                            if (vld.is_like)
+                            {
+                                <img id="likeVideoButton_@Html.DisplayFor(model => model.video_id)" class="clickable ratingButtons" ratingNumber="@Html.DisplayFor(model => model.video_likes)" src="~/Content/Pictures/liked.png" style="max-height:1.5em;opacity:0.8;" /><p style="display:inline;"></p> <p id="likeVideoButtonRatingValue_@Html.DisplayFor(model => model.video_id)" style="display:inline;">@Html.DisplayFor(model => model.video_likes)</p>
+                                <img id="dislikeVideoButton_@Html.DisplayFor(model => model.video_id)" class="clickable ratingButtons" ratingNumber="@Html.DisplayFor(model => model.video_dislikes)" src="~/Content/Pictures/dislike.png" style="max-height:1.5em;opacity:0.8;margin-left:0.5em;" /><p style="display:inline;"></p> <p id="dislikeVideoButtonRatingValue_@Html.DisplayFor(model => model.video_id)" style="display:inline;">@Html.DisplayFor(model => model.video_dislikes)</p>
+
+                            }
+                            else
+                            {
+                                <img id="likeVideoButton_@Html.DisplayFor(model => model.video_id)" class="clickable ratingButtons" ratingNumber="@Html.DisplayFor(model => model.video_likes)" src="~/Content/Pictures/like.png" style="max-height:1.5em;opacity:0.8;" /><p style="display:inline;"></p> <p id="likeVideoButtonRatingValue_@Html.DisplayFor(model => model.video_id)" style="display:inline;">@Html.DisplayFor(model => model.video_likes)</p>
+                                <img id="dislikeVideoButton_@Html.DisplayFor(model => model.video_id)" class="clickable ratingButtons" ratingNumber="@Html.DisplayFor(model => model.video_dislikes)" src="~/Content/Pictures/disliked.png" style="max-height:1.5em;opacity:0.8;margin-left:0.5em;" /><p style="display:inline;"></p> <p id="dislikeVideoButtonRatingValue_@Html.DisplayFor(model => model.video_id)" style="display:inline;">@Html.DisplayFor(model => model.video_dislikes)</p>
+
+                            }
+                        }
+                        else
+                        {
+                            <img id="likeVideoButton_@Html.DisplayFor(model => model.video_id)" class="clickable ratingButtons" ratingNumber="@Html.DisplayFor(model => model.video_likes)" src="~/Content/Pictures/like.png" style="max-height:1.5em;opacity:0.8;" /><p style="display:inline;"></p> <p id="likeVideoButtonRatingValue_@Html.DisplayFor(model => model.video_id)" style="display:inline;">@Html.DisplayFor(model => model.video_likes)</p>
+                            <img id="dislikeVideoButton_@Html.DisplayFor(model => model.video_id)" class="clickable ratingButtons" ratingNumber="@Html.DisplayFor(model => model.video_dislikes)" src="~/Content/Pictures/dislike.png" style="max-height:1.5em;opacity:0.8;margin-left:0.5em;" /><p style="display:inline;"></p> <p id="dislikeVideoButtonRatingValue_@Html.DisplayFor(model => model.video_id)" style="display:inline;">@Html.DisplayFor(model => model.video_dislikes)</p>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row" style="margin:1em 0 0 0;">
+                <div class="col-md-3" style="border:0.1px solid #e0e0e0;padding:0;margin-right:1.7em;">
+                    <p style="margin-top:-0.6em;background-color:white;width:15%;font-size:0.8em;opacity:0.8;">User</p>
+                    <div style="text-align:center;">
+                        @{
+                            if (Model.video_user.user_icon == null)
+                            {
+                                <a href="/User/Details?UserName=@Model.video_user.user_username"><img src="~/Content/UserPhotos/avatar.png" style="max-height:3em;border:1px solid white;border-radius:50%;" /></a>
+                            }
+                            else
+                            {
+                                <a href="/User/Details?UserName=@Model.video_user.user_username"><img src="~/Content/UserPhotos/@Model.video_user.user_icon" style="max-height:3em;" /></a>
+                            }
+                        }
+                        <a href="/User/Details?UserName=@Model.video_user.user_username" style="text-decoration:none;color:black;"><p>@Model.video_user.user_username</p></a>
+
+                    </div>
+                </div>
+                <div class="col-md-5" style="border:0.1px solid #e0e0e0;padding:0;margin-right:1.7em;">
+                    <p style="margin-top:-0.6em;background-color:white;width:30%;font-size:0.8em;opacity:0.8;">Description</p>
+                    <div style="text-align:center;">
+                        <p>@Model.video_description</p>
+                    </div>
+                </div>
+                <div class="col-md-3" style="border:0.1px solid #e0e0e0;padding:0;">
+                    <p style="margin-top:-0.6em;background-color:white;width:12%;font-size:0.8em;opacity:0.8;">Info</p>
+                    <div style="text-align:center;">
+                        <p style="font-size:0.7em;">@Model.video_created_string</p>
+                        <p style="font-size:0.7em;">@(Model.video_views + 1) views</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:1em 0 0 0;padding:0;">
+                <h4 style="text-align:center;">Comment section</h4>
+            </div>
+            @if (Model.video_comments_allowed)
+            {
+                <div class="row" style="margin:1em 0 0 0;">
+                    <div class="col-md-8" style="margin:0;padding:0;">
+                        <input id="CommentInput" videoId="@Html.DisplayFor(model => model.video_id)" class="form-control input-sm" style="width:80%;display:inline;" placeholder="Write a comment" />
+                        <button id="CommentSubmitButton" class="btn btn-default btn-sm"> Submit</button>
+                    </div>
+                    <div class="col-md-4" style="margin:0;padding:0;text-align:right;">
+                        <div class="btn-group" style="margin:0 0 0 0;background-color:white;">
+                            <button class="btn btn-default btn-sm dropdown-toggle" role="button" data-toggle="dropdown" style="display:inline;"><span class="glyphicon glyphicon-sort" style="font-size:0.8em;"></span></button>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownSort" style="">
+                                <li id="sortCommentsByRatingSubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By rating</a></li>
+                                <li id="sortCommentsByUploadDateSubmit" class="dropdown-item"><a href="#" style="font-size:0.8em;">By upload date</a></li>
+                                @*<li class="dropdown-divider"><div class="divider"></div></li>*@
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="CommentSection" class="row" style="margin:2em 0 0 0;">
+                    @foreach (var c in Model.video_comments)
+                    {
+
+                        <div id="@c.comment_id" ratingVal="@( c.comment_likes - c.comment_dislikes)" uploadedVal="@c.comment_created" class="row" style="margin:0 0 1em 0;">
+                            <div class="col-md-2" style="margin:0;padding:0;">
+                                <div>
+                                    @{
+                                        if (c.comment_user.user_icon == null)
+                                        {
+                                            <a href="@Url.Action("Details", "User", new { UserName = c.comment_user.user_username })" style="text-decoration:none;color:black;"><img style="max-height:2.5em;width:auto;border:1px solid white;border-radius:50%;" src="~/Content/UserPhotos/avatar.png" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Details", "User", new { UserName = c.comment_user.user_username })" style="text-decoration:none;color:black;"><img style="max-height:2.5em;width:auto;border:1px solid;border-radius:50%;" src="~/Content/UserPhotos/@c.comment_user.user_icon" /></a>
+                                        }
+
+                                        <a href="@Url.Action("Details", "User", new { UserName = c.comment_user.user_username })" style="text-decoration:none;color:black;"><p>@c.comment_user.user_username</p></a>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-10" style="margin:0 0 0 -2em;padding:0;">
+                                <div class="row"><p style="font-style:italic;font-size:0.6em;margin:0;padding:0;opacity:0.8;">@c.comment_created.Date.ToString("ddd MMM dd yyyy")</p></div>
+                                <div class="row"><p style="margin:0;padding:0;"> @c.comment_content</p></div>
+                                <div class="row">
+
+                                    @{ comment_like_dislike singleCLD = null;}
+                                    @if (cld != null)
+                                    {
+                                        foreach (var singleLD in cld)
+                                        {
+                                            if (singleLD.comment_id == c.comment_id)
+                                            {
+                                                singleCLD = singleLD;
+                                            }
+                                        }
+                                    }
+
+
+                                    @if (singleCLD != null)
+                                    {
+                                        if (singleCLD.is_like)
+                                        {
+                                            <img id="likeCommentButton_@c.comment_id" class="clickable ratingButtons" style="max-height:1em;width:auto;" src="~/Content/Pictures/liked.png" /><p id="likeCommentButtonRatingValue_@c.comment_id" style="display:inline;margin-left:0.3em;">@c.comment_likes</p>
+                                            <img id="dislikeCommentButton_@c.comment_id" class="clickable ratingButtons" style="max-height:1em;width:auto;margin-left:0.5em;" src="~/Content/Pictures/dislike.png" /><p id="dislikeCommentButtonRatingValue_@c.comment_id" style="display:inline;margin-left:0.3em;">@c.comment_dislikes</p>
+                                        }
+                                        else
+                                        {
+                                            <img id="likeCommentButton_@c.comment_id" class="clickable ratingButtons" style="max-height:1em;width:auto;" src="~/Content/Pictures/like.png" /><p id="likeCommentButtonRatingValue_@c.comment_id" style="display:inline;margin-left:0.3em;">@c.comment_likes</p>
+                                            <img id="dislikeCommentButton_@c.comment_id" class="clickable ratingButtons" style="max-height:1em;width:auto;margin-left:0.5em;" src="~/Content/Pictures/disliked.png" /><p id="dislikeCommentButtonRatingValue_@c.comment_id" style="display:inline;margin-left:0.3em;">@c.comment_dislikes</p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <img id="likeCommentButton_@c.comment_id" class="clickable ratingButtons" style="max-height:1em;width:auto;" src="~/Content/Pictures/like.png" /><p id="likeCommentButtonRatingValue_@c.comment_id" style="display:inline;margin-left:0.3em;">@c.comment_likes</p>
+                                        <img id="dislikeCommentButton_@c.comment_id" class="clickable ratingButtons" style="max-height:1em;width:auto;margin-left:0.5em;" src="~/Content/Pictures/dislike.png" /><p id="dislikeCommentButtonRatingValue_@c.comment_id" style="display:inline;margin-left:0.3em;">@c.comment_dislikes</p>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <p style="text-align:center;opacity:0.5;">Comments are not allowed on this video!</p>
+                </div>
+            }
+
+            @if (User.IsInRole("Admin") || User.Identity.GetApplicationUserUsername().Equals(Model.video_user.user_username))
+            {
+                <div class="row">
+                    <div class="row"><h4 style="text-align:center;">Video options</h4></div>
+                    <div class="row" style="text-align:center;">
+                        @Html.ActionLink("Edit", "Edit", "Video", new { id = Model.video_id }, new { id = "EditActionLink", @class = "", type = "button", style = "display:none;" })
+                        <button class="btn btn-default btn-sm" style="width:50%;" onclick="RedirectVideoEdit()">Edit</button>
+                        @if(User.IsInRole("Admin")) {
+                        <button class="btn btn-default btn-sm" style="width:50%;margin:1em 0 0 0" onclick="RedirectVideoBan()">Ban</button>
+                        }
+                        
+                        <button class="btn btn-default btn-sm" style="width:50%;margin:1em 0 2em 0;" onclick="RedirectVideoDelete()">Delete</button>
+                    </div>
+
+                </div>
+            }
+        </div>
+        <div class="col-md-3" style="height:auto;"></div>
+    </div>
+}
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    function RedirectVideoEdit() { window.location.replace('/Video/Edit/'+@Model.video_id); }
+    function RedirectVideoDelete() { window.location.replace('/Video/Delete/' +@Model.video_id); }
+    function RedirectVideoBan() { window.location.replace('/Video/Ban/' +@Model.video_id); }
+    //?
+    function UnbanVideo(videoId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Video/Unban?id=' + @Model.video_id,
+            dataType: false,
+            processData: false,
+            success: function (e) {
+                window.location.replace('/Video/Index');
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    function AddView() {
+        $.ajax({
+            type: 'POST',
+            url: '/Video/AddView?id=' + @Model.video_id,
+            dataType: false,
+            processData: false,
+            success: function (e) {
+                console.log(e);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    AddView();
+</script>
+<script src="~/Scripts/FirstScript.js"></script>
+<script src="~/Scripts/Comment.js"></script>
+<script src="~/Scripts/RatingButtons.js"></script>
+

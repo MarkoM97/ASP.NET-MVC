@@ -1,0 +1,108 @@
+﻿@model Youtube.Models.EditAccoutViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+
+            @*<input class="form-control input-sm" value="@Model.user_email" />*@
+            @using (Html.BeginForm("Edit", "Account",FormMethod.Post,new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Edit</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @*<p>@Html.DisplayFor(m => m.Id)</p>*@
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", style = "width:50%;" })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "width:50%;" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                 @Html.HiddenFor(m => m.OldPassword)
+
+
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", style = "width:50%;", type = "password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", style = "width:50%;", type = "password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ImageFile, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        <input type="file" name="ImageFile" />
+                    </div>
+                </div>
+
+
+                {
+                    List<SelectListItem> listItems = new List<SelectListItem>();
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Admin",
+                        Value = "Admin"
+                    });
+
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Regular",
+                        Value = "Regular",
+                        Selected = true
+                    });
+
+
+                    if (User.IsInRole("Admin"))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label", })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(Model => Model.Role, listItems)
+                            </div>
+                        </div>
+                    }
+            }
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

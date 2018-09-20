@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="treca_aplikacijaModelStoreContainer" CdmEntityContainer="treca_aplikacija_model">
+    <EntitySetMapping Name="comments">
+      <EntityTypeMapping TypeName="treca_aplikacijaModel.comment">
+        <MappingFragment StoreEntitySet="comment">
+          <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+          <ScalarProperty Name="comment_content" ColumnName="comment_content" />
+          <ScalarProperty Name="comment_created" ColumnName="comment_created" />
+          <ScalarProperty Name="comment_user_id" ColumnName="comment_user_id" />
+          <ScalarProperty Name="comment_video_id" ColumnName="comment_video_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="comment_like_dislike">
+      <EntityTypeMapping TypeName="treca_aplikacijaModel.comment_like_dislike">
+        <MappingFragment StoreEntitySet="comment_like_dislike">
+          <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+          <ScalarProperty Name="users_id" ColumnName="users_id" />
+          <ScalarProperty Name="is_like" ColumnName="is_like" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="treca_aplikacijaModel.role">
+        <MappingFragment StoreEntitySet="roles">
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="treca_aplikacijaModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="users_id" ColumnName="users_id" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_username" ColumnName="user_username" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_icon" ColumnName="user_icon" />
+          <ScalarProperty Name="user_created" ColumnName="user_created" />
+          <ScalarProperty Name="user_banned" ColumnName="user_banned" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="videos">
+      <EntityTypeMapping TypeName="treca_aplikacijaModel.video">
+        <MappingFragment StoreEntitySet="video">
+          <ScalarProperty Name="video_id" ColumnName="video_id" />
+          <ScalarProperty Name="video_name" ColumnName="video_name" />
+          <ScalarProperty Name="video_description" ColumnName="video_description" />
+          <ScalarProperty Name="video_icon" ColumnName="video_icon" />
+          <ScalarProperty Name="video_url" ColumnName="video_url" />
+          <ScalarProperty Name="video_user_id" ColumnName="video_user_id" />
+          <ScalarProperty Name="video_created" ColumnName="video_created" />
+          <ScalarProperty Name="video_views" ColumnName="video_views" />
+          <ScalarProperty Name="video_comments_allowed" ColumnName="video_comments_allowed" />
+          <ScalarProperty Name="video_banned" ColumnName="video_banned" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="video_like_dislike">
+      <EntityTypeMapping TypeName="treca_aplikacijaModel.video_like_dislike">
+        <MappingFragment StoreEntitySet="video_like_dislike">
+          <ScalarProperty Name="video_id" ColumnName="video_id" />
+          <ScalarProperty Name="users_id" ColumnName="users_id" />
+          <ScalarProperty Name="is_like" ColumnName="is_like" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="users_following" TypeName="treca_aplikacijaModel.users_following" StoreEntitySet="users_following">
+      <EndProperty Name="users">
+        <ScalarProperty Name="users_id" ColumnName="user_following" />
+      </EndProperty>
+      <EndProperty Name="users1">
+        <ScalarProperty Name="users_id" ColumnName="user_followed" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="users_role" TypeName="treca_aplikacijaModel.users_role" StoreEntitySet="users_role">
+      <EndProperty Name="roles">
+        <ScalarProperty Name="role_id" ColumnName="role_id" />
+      </EndProperty>
+      <EndProperty Name="users">
+        <ScalarProperty Name="users_id" ColumnName="users_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

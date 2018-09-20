@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Administrator";
+}
+
+<div class="row" style="text-align:center;margin:5em 0 2em 0;"> <h2>Search user or video</h2></div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="input-group">
+            <input id="AdminSearchParam" type="text" class="form-control" aria-label="..." placeholder="Search">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li id="AdminSearchChoiceUser" class="adminSearchChoices"><a href="#">User</a></li>
+                    <li id="AdminSearchChoiceVideo" class="adminSearchChoices"><a href="#">Video</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+        </div><!-- /input-group -->
+    </div>
+</div>
+<div class="row">
+    <div id="AdminEntitiesContainer" class="col-md-12" style="margin-top:2em;">
+
+    </div>
+</div>
+<div class="col-md-3"></div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/Sorting_Filtering.js"></script>
+
+<script src="~/Scripts/FirstScript.js"></script>
