@@ -25,7 +25,10 @@ namespace Youtube.Models
         public System.DateTime comment_created { get; set; }
         public Nullable<byte> comment_user_id { get; set; }
         public Nullable<byte> comment_video_id { get; set; }
-    
+
+
+        public int comment_rating { get; set; }
+
         public virtual user user { get; set; }
         public virtual video video { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -21,9 +21,6 @@ namespace Youtube.Models
             this.comment_like_dislike = new HashSet<comment_like_dislike>();
             this.videos = new HashSet<video>();
             this.video_like_dislike = new HashSet<video_like_dislike>();
-            this.users1 = new HashSet<user>();
-            this.users = new HashSet<user>();
-            this.roles = new HashSet<role>();
         }
     
         public byte users_id { get; set; }
@@ -42,11 +39,5 @@ namespace Youtube.Models
         public virtual ICollection<video> videos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<video_like_dislike> video_like_dislike { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> users1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<role> roles { get; set; }
     }
 }

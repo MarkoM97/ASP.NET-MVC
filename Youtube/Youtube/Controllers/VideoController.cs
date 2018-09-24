@@ -106,8 +106,16 @@ namespace Youtube.Controllers
         }
 
         // GET: Video/Details/5
-        public ActionResult Details(byte? id)
+        // GET: Video/Details/5?page=x&sort=y
+        public ActionResult Details(byte? id, int? page = 1, string sort = "Created", bool initial = true)
         {
+
+            if (!initial) ViewBag.Scroll = true;
+            else ViewBag.Scroll = false; 
+            
+            ViewBag.CurrentCommentPage = page;
+            ViewBag.CurrentCommentSortParam = sort;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -115,6 +123,10 @@ namespace Youtube.Controllers
 
             treca_aplikacija_model db = new treca_aplikacija_model();
             video video = db.videos.Find(id);
+            if (video == null)
+            {
+                return HttpNotFound();
+            }
             UserViewModel user = ApplicationUtils.FindUserByUsername(User.Identity.GetApplicationUserUsername());
             if(user != null)
             {
@@ -125,17 +137,66 @@ namespace Youtube.Controllers
                         ViewBag.LikeDislikeEntity = x;
                     }
                 }
+                
+                
                 ViewBag.UserCommentLikeDislike = db.comment_like_dislike.Where(x => x.users_id == user.users_id && x.comment.comment_video_id == id).ToList();
             }
 
-
-
-            if (video == null)
+            //Initial pagination
+            int numOfComments = video.comments.Count();
+            int paginationNumber = 0;
+            if(numOfComments > 5)
             {
-                return HttpNotFound();
+                paginationNumber = (numOfComments / 5) + 1;
+                
+            } else
+            {
+                paginationNumber = 1;
             }
+            ViewBag.CommentPagination = paginationNumber;
 
 
+
+            //Pagination and sort param
+            List<comment> comments = new List<comment>();
+            if (sort.Equals("Created"))
+            {
+               comments = video.comments.OrderByDescending(x => x.comment_created).ToList();
+            } else
+            {
+                foreach (var x in video.comments)
+                {
+                    x.comment_rating = x.comment_like_dislike.Where(z => z.is_like).Count() - x.comment_like_dislike.Where(z => !z.is_like).Count();
+                    Debug.WriteLine("Comment content:" + x.comment_content + "Assigned rating: " + x.comment_rating);
+                }
+
+                comments = video.comments.OrderByDescending(x => x.comment_rating).ToList();
+            }
+            if(page == 1)
+            {
+                try
+                {
+                    comments = comments.GetRange(0, 5);
+                } catch
+                {
+                    comments = comments.GetRange(0, comments.Count());
+                }
+                
+            } else
+            {
+                try
+                {
+                    //
+                    comments = comments.GetRange((((int)page - 1) * 5), 5);
+                } catch(ArgumentException)
+                {
+                    Debug.WriteLine(video.comments.ToList().Count());
+                    comments = comments.GetRange((((int)page - 1) * 5), comments.Count() / 5);
+                }
+                
+            }
+            
+            video.comments = comments;
             return View(ApplicationUtils.CreateVideoViewModel(video));
         }
 

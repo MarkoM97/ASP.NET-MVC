@@ -1,4 +1,4 @@
-﻿$('.ratingButtons').on('click', function (e) {
+﻿$(document).on('click', '.ratingButtons', function (e) {
     e.preventDefault();
     console.log($(this));
     var current = $(this)[0];

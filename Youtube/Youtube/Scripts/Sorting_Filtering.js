@@ -45,17 +45,19 @@ function addVideosToContainer(videos) {
     for (var i in videos.Videos) {
         var current = videos.Videos[i];
         console.log(current.video_name);
-        var videoContainer = $('<div class="videoContainer" uploadedVal="'+current.video_created+'" ratingVal="'+(current.video_likes - current.video_dislikes)+'" viewsVal="'+current.video_views+'" style="position:relative;background-color:#fafafa;border-bottom:1px solid #e8e8e8;display:inline;float:left;margin:0.5em;padding-bottom:1em;box-shadow:1px 1px 15px #c8c8c8;width:9em;opacity:0.9;"></div>');
-        videoContainer.append($('<a href="/Video/Details/' + current.video_id + '"><img id="' + current.video_id + '" class="VideoThumbnails" src="/Content/VideoImages/' + current.video_icon+'" style="width:100%;position:absolute;margin:0 0.1em 0 0;height:5em;padding:0;z-index:1;" /></a>'));
-        videoContainer.append($(' <h5 style="padding:0.1em 0;font-weight:bold;z-index:2;margin-top:5em;">' + current.video_name+'</h5>'));
-        videoContainer.append($('<p style="margin:0;padding:0;font-size:0.5em;display:inline;">Posted: ' + current.video_created_string+'</p>'));
-        videoContainer.append($(' <p style="margin:1em 0 0 0;padding:0;font-size:0.5em;float:right;">' + current.video_views + ' Views</p>'));
-        if (current.video_user.user_icon == null) {
-            videoContainer.append($('</br><img src="/Content/UserPhotos/avatar.png" style="max-height:0.9em;display:inline;border:0.1px solid white;border-radius:50%;" />'));
-        } else {
-            videoContainer.append($('</br><img src="/Content/UserPhotos/' + current.video_user.user_icon + '" style="max-height:0.9em;display:inline;border:0.1px solid white;border-radius:50%;" />'));
-        }
-        videoContainer.append($('<p style="margin:0;padding:0;font-size:0.5em;display:inline;">' + current.video_user.user_username + '</p>'));
+
+        var videoContainer = $('<div id="' + current.video_id + '" class="videoContainer" uploadedVal="' + current.video_created + '" ratingVal="' + (current.video_likes - current.video_dislikes) + '" viewsVal="' + current.video_views +'" style="position:relative;background-color:#fafafa;border-bottom:1px solid #e8e8e8;display:inline;float:left;padding-bottom:1em;box-shadow:1px 1px 15px #c8c8c8;width:11em;opacity:0.8;margin:0 0.5em 0 0;"></div>');
+        videoContainer.append($('<a href="/Video/Details/' + current.video_id + '"><img id="' + current.video_id + '" class="VideoThumbnails" src="/Content/VideoImages/' + current.video_icon +'" style="width:100%;position:absolute;margin:0 0.1em 0 0;height:6em;padding:0;z-index:1;" /></a>'));
+        videoContainer.append($(' <h5 style="padding:0.1em 0;font-weight:bold;z-index:2;margin-top:6.5em;">' + current.video_name+'</h5>'));
+        videoContainer.append($('<div class="row" style="margin:0;padding:0;text-align:center;"> <p style="margin:1em 0 0 0;padding:0;font-size:0.5em;">' + current.video_views + ' Views</p></div>'));
+        videoContainer.append($('<div class="row" style="margin:0;padding:0;text-align:center;"><p style="margin:0;padding:0;font-size:0.5em;display:inline;">' + current.video_created_string + '</p></div>'));
+        
+
+
+        var userSec = $('<div class="row" style="margin:-1.5em 0 0 0;padding:0;text-align:center;"></div>');
+        userSec.append($('</br><img src="/Content/UserPhotos/' + current.video_user.user_icon + '" style="max-height:0.9em;display:inline;border:0.1px solid white;border-radius:50%;" />'));
+        userSec.append($('<p style="margin:0;padding:0;font-size:0.5em;display:inline;">' + current.video_user.user_username + '</p>'));
+        videoContainer.append(userSec);
         $('#AllVideoContainer').append(videoContainer);
     }
 }
@@ -164,8 +166,8 @@ function findHighestByUploadDate(unsortedElements) {
         for (var j = 0; j < unsortedElements.length; j++) {
             var potentialHighest = unsortedElements[j];
             //+ ' 00:00:00 UTC'
-            var firstComparationVal = Date.parse((currentHighest.attributes.uploadedVal.textContent).substring(4));
-            var secondComparationVal = Date.parse((potentialHighest.attributes.uploadedVal.textContent).substring(4));
+            var firstComparationVal = Date.parse((currentHighest.attributes.uploadedVal.textContent)); /*substring(4));*/
+            var secondComparationVal = Date.parse((potentialHighest.attributes.uploadedVal.textContent)); /*.substring(4));*/
             if (secondComparationVal > firstComparationVal) {
                 currentHighest = potentialHighest;
             }

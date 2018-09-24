@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="treca_aplikacijaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="treca_aplikacija_modelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="comment">
           <Key>
             <PropertyRef Name="comment_id" />
@@ -24,13 +24,6 @@
           <Property Name="users_id" Type="tinyint" Nullable="false" />
           <Property Name="is_like" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="roles">
-          <Key>
-            <PropertyRef Name="role_id" />
-          </Key>
-          <Property Name="role_id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="role_name" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="users_id" />
@@ -42,22 +35,6 @@
           <Property Name="user_icon" Type="varchar" MaxLength="500" />
           <Property Name="user_created" Type="datetime" Nullable="false" />
           <Property Name="user_banned" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="users_following">
-          <Key>
-            <PropertyRef Name="user_following" />
-            <PropertyRef Name="user_followed" />
-          </Key>
-          <Property Name="user_following" Type="tinyint" Nullable="false" />
-          <Property Name="user_followed" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="users_role">
-          <Key>
-            <PropertyRef Name="users_id" />
-            <PropertyRef Name="role_id" />
-          </Key>
-          <Property Name="users_id" Type="tinyint" Nullable="false" />
-          <Property Name="role_id" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="video">
           <Key>
@@ -83,7 +60,7 @@
           <Property Name="users_id" Type="tinyint" Nullable="false" />
           <Property Name="is_like" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK__comment__comment__4CA06362">
+        <Association Name="FK__comment__comment__5535A963">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="comment" Type="Self.comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -95,7 +72,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment__comment__4D94879B">
+        <Association Name="FK__comment__comment__5629CD9C">
           <End Role="video" Type="Self.video" Multiplicity="0..1" />
           <End Role="comment" Type="Self.comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -107,7 +84,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment_l__comme__5070F446">
+        <Association Name="FK__comment_l__comme__59063A47">
           <End Role="comment" Type="Self.comment" Multiplicity="1" />
           <End Role="comment_like_dislike" Type="Self.comment_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -119,7 +96,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment_l__users__5165187F">
+        <Association Name="FK__comment_l__users__59FA5E80">
           <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="comment_like_dislike" Type="Self.comment_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -131,55 +108,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__users_fol__user___412EB0B6">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="users_following" Type="Self.users_following" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="users_id" />
-            </Principal>
-            <Dependent Role="users_following">
-              <PropertyRef Name="user_following" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__users_fol__user___4222D4EF">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="users_following" Type="Self.users_following" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="users_id" />
-            </Principal>
-            <Dependent Role="users_following">
-              <PropertyRef Name="user_followed" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__users_rol__role___3E52440B">
-          <End Role="roles" Type="Self.roles" Multiplicity="1" />
-          <End Role="users_role" Type="Self.users_role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="roles">
-              <PropertyRef Name="role_id" />
-            </Principal>
-            <Dependent Role="users_role">
-              <PropertyRef Name="role_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__users_rol__users__3D5E1FD2">
-          <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="users_role" Type="Self.users_role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="users_id" />
-            </Principal>
-            <Dependent Role="users_role">
-              <PropertyRef Name="users_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__video__video_use__45F365D3">
+        <Association Name="FK__video__video_use__4E88ABD4">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="video" Type="Self.video" Multiplicity="*" />
           <ReferentialConstraint>
@@ -191,7 +120,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__video_lik__users__49C3F6B7">
+        <Association Name="FK__video_lik__users__52593CB8">
           <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="video_like_dislike" Type="Self.video_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -203,7 +132,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__video_lik__video__48CFD27E">
+        <Association Name="FK__video_lik__video__5165187F">
           <End Role="video" Type="Self.video" Multiplicity="1" />
           <End Role="video_like_dislike" Type="Self.video_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -215,56 +144,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="treca_aplikacijaModelStoreContainer">
+        <EntityContainer Name="treca_aplikacija_modelModelStoreContainer">
           <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comment_like_dislike" EntityType="Self.comment_like_dislike" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="users_following" EntityType="Self.users_following" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="users_role" EntityType="Self.users_role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="video" EntityType="Self.video" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="video_like_dislike" EntityType="Self.video_like_dislike" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__comment__comment__4CA06362" Association="Self.FK__comment__comment__4CA06362">
+          <AssociationSet Name="FK__comment__comment__5535A963" Association="Self.FK__comment__comment__5535A963">
             <End Role="users" EntitySet="users" />
             <End Role="comment" EntitySet="comment" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment__comment__4D94879B" Association="Self.FK__comment__comment__4D94879B">
+          <AssociationSet Name="FK__comment__comment__5629CD9C" Association="Self.FK__comment__comment__5629CD9C">
             <End Role="video" EntitySet="video" />
             <End Role="comment" EntitySet="comment" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment_l__comme__5070F446" Association="Self.FK__comment_l__comme__5070F446">
+          <AssociationSet Name="FK__comment_l__comme__59063A47" Association="Self.FK__comment_l__comme__59063A47">
             <End Role="comment" EntitySet="comment" />
             <End Role="comment_like_dislike" EntitySet="comment_like_dislike" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment_l__users__5165187F" Association="Self.FK__comment_l__users__5165187F">
+          <AssociationSet Name="FK__comment_l__users__59FA5E80" Association="Self.FK__comment_l__users__59FA5E80">
             <End Role="users" EntitySet="users" />
             <End Role="comment_like_dislike" EntitySet="comment_like_dislike" />
           </AssociationSet>
-          <AssociationSet Name="FK__users_fol__user___412EB0B6" Association="Self.FK__users_fol__user___412EB0B6">
-            <End Role="users" EntitySet="users" />
-            <End Role="users_following" EntitySet="users_following" />
-          </AssociationSet>
-          <AssociationSet Name="FK__users_fol__user___4222D4EF" Association="Self.FK__users_fol__user___4222D4EF">
-            <End Role="users" EntitySet="users" />
-            <End Role="users_following" EntitySet="users_following" />
-          </AssociationSet>
-          <AssociationSet Name="FK__users_rol__role___3E52440B" Association="Self.FK__users_rol__role___3E52440B">
-            <End Role="roles" EntitySet="roles" />
-            <End Role="users_role" EntitySet="users_role" />
-          </AssociationSet>
-          <AssociationSet Name="FK__users_rol__users__3D5E1FD2" Association="Self.FK__users_rol__users__3D5E1FD2">
-            <End Role="users" EntitySet="users" />
-            <End Role="users_role" EntitySet="users_role" />
-          </AssociationSet>
-          <AssociationSet Name="FK__video__video_use__45F365D3" Association="Self.FK__video__video_use__45F365D3">
+          <AssociationSet Name="FK__video__video_use__4E88ABD4" Association="Self.FK__video__video_use__4E88ABD4">
             <End Role="users" EntitySet="users" />
             <End Role="video" EntitySet="video" />
           </AssociationSet>
-          <AssociationSet Name="FK__video_lik__users__49C3F6B7" Association="Self.FK__video_lik__users__49C3F6B7">
+          <AssociationSet Name="FK__video_lik__users__52593CB8" Association="Self.FK__video_lik__users__52593CB8">
             <End Role="users" EntitySet="users" />
             <End Role="video_like_dislike" EntitySet="video_like_dislike" />
           </AssociationSet>
-          <AssociationSet Name="FK__video_lik__video__48CFD27E" Association="Self.FK__video_lik__video__48CFD27E">
+          <AssociationSet Name="FK__video_lik__video__5165187F" Association="Self.FK__video_lik__video__5165187F">
             <End Role="video" EntitySet="video" />
             <End Role="video_like_dislike" EntitySet="video_like_dislike" />
           </AssociationSet>
@@ -273,7 +183,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="treca_aplikacijaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="treca_aplikacija_modelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="comment">
           <Key>
             <PropertyRef Name="comment_id" />
@@ -283,9 +193,9 @@
           <Property Name="comment_created" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="comment_user_id" Type="Byte" />
           <Property Name="comment_video_id" Type="Byte" />
-          <NavigationProperty Name="user" Relationship="Self.FK__comment__comment__4CA06362" FromRole="comment" ToRole="users" />
-          <NavigationProperty Name="video" Relationship="Self.FK__comment__comment__4D94879B" FromRole="comment" ToRole="video" />
-          <NavigationProperty Name="comment_like_dislike" Relationship="Self.FK__comment_l__comme__5070F446" FromRole="comment" ToRole="comment_like_dislike" />
+          <NavigationProperty Name="user" Relationship="Self.FK__comment__comment__5535A963" FromRole="comment" ToRole="users" />
+          <NavigationProperty Name="video" Relationship="Self.FK__comment__comment__5629CD9C" FromRole="comment" ToRole="video" />
+          <NavigationProperty Name="comment_like_dislike" Relationship="Self.FK__comment_l__comme__59063A47" FromRole="comment" ToRole="comment_like_dislike" />
         </EntityType>
         <EntityType Name="comment_like_dislike">
           <Key>
@@ -295,16 +205,8 @@
           <Property Name="comment_id" Type="Byte" Nullable="false" />
           <Property Name="users_id" Type="Byte" Nullable="false" />
           <Property Name="is_like" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="comment" Relationship="Self.FK__comment_l__comme__5070F446" FromRole="comment_like_dislike" ToRole="comment" />
-          <NavigationProperty Name="user" Relationship="Self.FK__comment_l__users__5165187F" FromRole="comment_like_dislike" ToRole="users" />
-        </EntityType>
-        <EntityType Name="role">
-          <Key>
-            <PropertyRef Name="role_id" />
-          </Key>
-          <Property Name="role_id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="users" Relationship="Self.users_role" FromRole="roles" ToRole="users" />
+          <NavigationProperty Name="comment" Relationship="Self.FK__comment_l__comme__59063A47" FromRole="comment_like_dislike" ToRole="comment" />
+          <NavigationProperty Name="user" Relationship="Self.FK__comment_l__users__59FA5E80" FromRole="comment_like_dislike" ToRole="users" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -317,13 +219,10 @@
           <Property Name="user_icon" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="user_created" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="user_banned" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="comments" Relationship="Self.FK__comment__comment__4CA06362" FromRole="users" ToRole="comment" />
-          <NavigationProperty Name="comment_like_dislike" Relationship="Self.FK__comment_l__users__5165187F" FromRole="users" ToRole="comment_like_dislike" />
-          <NavigationProperty Name="videos" Relationship="Self.FK__video__video_use__45F365D3" FromRole="users" ToRole="video" />
-          <NavigationProperty Name="video_like_dislike" Relationship="Self.FK__video_lik__users__49C3F6B7" FromRole="users" ToRole="video_like_dislike" />
-          <NavigationProperty Name="users1" Relationship="Self.users_following" FromRole="users" ToRole="users1" />
-          <NavigationProperty Name="users" Relationship="Self.users_following" FromRole="users1" ToRole="users" />
-          <NavigationProperty Name="roles" Relationship="Self.users_role" FromRole="users" ToRole="roles" />
+          <NavigationProperty Name="comments" Relationship="Self.FK__comment__comment__5535A963" FromRole="users" ToRole="comment" />
+          <NavigationProperty Name="comment_like_dislike" Relationship="Self.FK__comment_l__users__59FA5E80" FromRole="users" ToRole="comment_like_dislike" />
+          <NavigationProperty Name="videos" Relationship="Self.FK__video__video_use__4E88ABD4" FromRole="users" ToRole="video" />
+          <NavigationProperty Name="video_like_dislike" Relationship="Self.FK__video_lik__users__52593CB8" FromRole="users" ToRole="video_like_dislike" />
         </EntityType>
         <EntityType Name="video">
           <Key>
@@ -339,9 +238,9 @@
           <Property Name="video_views" Type="Byte" Nullable="false" />
           <Property Name="video_comments_allowed" Type="Boolean" Nullable="false" />
           <Property Name="video_banned" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="comments" Relationship="Self.FK__comment__comment__4D94879B" FromRole="video" ToRole="comment" />
-          <NavigationProperty Name="user" Relationship="Self.FK__video__video_use__45F365D3" FromRole="video" ToRole="users" />
-          <NavigationProperty Name="video_like_dislike" Relationship="Self.FK__video_lik__video__48CFD27E" FromRole="video" ToRole="video_like_dislike" />
+          <NavigationProperty Name="comments" Relationship="Self.FK__comment__comment__5629CD9C" FromRole="video" ToRole="comment" />
+          <NavigationProperty Name="user" Relationship="Self.FK__video__video_use__4E88ABD4" FromRole="video" ToRole="users" />
+          <NavigationProperty Name="video_like_dislike" Relationship="Self.FK__video_lik__video__5165187F" FromRole="video" ToRole="video_like_dislike" />
         </EntityType>
         <EntityType Name="video_like_dislike">
           <Key>
@@ -351,10 +250,10 @@
           <Property Name="video_id" Type="Byte" Nullable="false" />
           <Property Name="users_id" Type="Byte" Nullable="false" />
           <Property Name="is_like" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK__video_lik__users__49C3F6B7" FromRole="video_like_dislike" ToRole="users" />
-          <NavigationProperty Name="video" Relationship="Self.FK__video_lik__video__48CFD27E" FromRole="video_like_dislike" ToRole="video" />
+          <NavigationProperty Name="user" Relationship="Self.FK__video_lik__users__52593CB8" FromRole="video_like_dislike" ToRole="users" />
+          <NavigationProperty Name="video" Relationship="Self.FK__video_lik__video__5165187F" FromRole="video_like_dislike" ToRole="video" />
         </EntityType>
-        <Association Name="FK__comment__comment__4CA06362">
+        <Association Name="FK__comment__comment__5535A963">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="comment" Type="Self.comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -366,7 +265,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment__comment__4D94879B">
+        <Association Name="FK__comment__comment__5629CD9C">
           <End Role="video" Type="Self.video" Multiplicity="0..1" />
           <End Role="comment" Type="Self.comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -378,7 +277,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment_l__comme__5070F446">
+        <Association Name="FK__comment_l__comme__59063A47">
           <End Role="comment" Type="Self.comment" Multiplicity="1" />
           <End Role="comment_like_dislike" Type="Self.comment_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -390,7 +289,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment_l__users__5165187F">
+        <Association Name="FK__comment_l__users__59FA5E80">
           <End Role="users" Type="Self.user" Multiplicity="1" />
           <End Role="comment_like_dislike" Type="Self.comment_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -402,7 +301,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__video__video_use__45F365D3">
+        <Association Name="FK__video__video_use__4E88ABD4">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="video" Type="Self.video" Multiplicity="*" />
           <ReferentialConstraint>
@@ -414,7 +313,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__video_lik__users__49C3F6B7">
+        <Association Name="FK__video_lik__users__52593CB8">
           <End Role="users" Type="Self.user" Multiplicity="1" />
           <End Role="video_like_dislike" Type="Self.video_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -426,7 +325,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__video_lik__video__48CFD27E">
+        <Association Name="FK__video_lik__video__5165187F">
           <End Role="video" Type="Self.video" Multiplicity="1" />
           <End Role="video_like_dislike" Type="Self.video_like_dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -438,56 +337,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="users_following">
-          <End Role="users" Type="Self.user" Multiplicity="*" />
-          <End Role="users1" Type="Self.user" Multiplicity="*" />
-        </Association>
-        <Association Name="users_role">
-          <End Role="roles" Type="Self.role" Multiplicity="*" />
-          <End Role="users" Type="Self.user" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="treca_aplikacija_model" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="comments" EntityType="Self.comment" />
           <EntitySet Name="comment_like_dislike" EntityType="Self.comment_like_dislike" />
-          <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="videos" EntityType="Self.video" />
           <EntitySet Name="video_like_dislike" EntityType="Self.video_like_dislike" />
-          <AssociationSet Name="FK__comment__comment__4CA06362" Association="Self.FK__comment__comment__4CA06362">
+          <AssociationSet Name="FK__comment__comment__5535A963" Association="Self.FK__comment__comment__5535A963">
             <End Role="users" EntitySet="users" />
             <End Role="comment" EntitySet="comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment__comment__4D94879B" Association="Self.FK__comment__comment__4D94879B">
+          <AssociationSet Name="FK__comment__comment__5629CD9C" Association="Self.FK__comment__comment__5629CD9C">
             <End Role="video" EntitySet="videos" />
             <End Role="comment" EntitySet="comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment_l__comme__5070F446" Association="Self.FK__comment_l__comme__5070F446">
+          <AssociationSet Name="FK__comment_l__comme__59063A47" Association="Self.FK__comment_l__comme__59063A47">
             <End Role="comment" EntitySet="comments" />
             <End Role="comment_like_dislike" EntitySet="comment_like_dislike" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment_l__users__5165187F" Association="Self.FK__comment_l__users__5165187F">
+          <AssociationSet Name="FK__comment_l__users__59FA5E80" Association="Self.FK__comment_l__users__59FA5E80">
             <End Role="users" EntitySet="users" />
             <End Role="comment_like_dislike" EntitySet="comment_like_dislike" />
           </AssociationSet>
-          <AssociationSet Name="FK__video__video_use__45F365D3" Association="Self.FK__video__video_use__45F365D3">
+          <AssociationSet Name="FK__video__video_use__4E88ABD4" Association="Self.FK__video__video_use__4E88ABD4">
             <End Role="users" EntitySet="users" />
             <End Role="video" EntitySet="videos" />
           </AssociationSet>
-          <AssociationSet Name="FK__video_lik__users__49C3F6B7" Association="Self.FK__video_lik__users__49C3F6B7">
+          <AssociationSet Name="FK__video_lik__users__52593CB8" Association="Self.FK__video_lik__users__52593CB8">
             <End Role="users" EntitySet="users" />
             <End Role="video_like_dislike" EntitySet="video_like_dislike" />
           </AssociationSet>
-          <AssociationSet Name="FK__video_lik__video__48CFD27E" Association="Self.FK__video_lik__video__48CFD27E">
+          <AssociationSet Name="FK__video_lik__video__5165187F" Association="Self.FK__video_lik__video__5165187F">
             <End Role="video" EntitySet="videos" />
             <End Role="video_like_dislike" EntitySet="video_like_dislike" />
-          </AssociationSet>
-          <AssociationSet Name="users_following" Association="Self.users_following">
-            <End Role="users" EntitySet="users" />
-            <End Role="users1" EntitySet="users" />
-          </AssociationSet>
-          <AssociationSet Name="users_role" Association="Self.users_role">
-            <End Role="roles" EntitySet="roles" />
-            <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -495,9 +377,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="treca_aplikacijaModelStoreContainer" CdmEntityContainer="treca_aplikacija_model">
+        <EntityContainerMapping StorageEntityContainer="treca_aplikacija_modelModelStoreContainer" CdmEntityContainer="treca_aplikacija_model">
           <EntitySetMapping Name="comments">
-            <EntityTypeMapping TypeName="treca_aplikacijaModel.comment">
+            <EntityTypeMapping TypeName="treca_aplikacija_modelModel.comment">
               <MappingFragment StoreEntitySet="comment">
                 <ScalarProperty Name="comment_id" ColumnName="comment_id" />
                 <ScalarProperty Name="comment_content" ColumnName="comment_content" />
@@ -508,7 +390,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="comment_like_dislike">
-            <EntityTypeMapping TypeName="treca_aplikacijaModel.comment_like_dislike">
+            <EntityTypeMapping TypeName="treca_aplikacija_modelModel.comment_like_dislike">
               <MappingFragment StoreEntitySet="comment_like_dislike">
                 <ScalarProperty Name="comment_id" ColumnName="comment_id" />
                 <ScalarProperty Name="users_id" ColumnName="users_id" />
@@ -516,16 +398,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="treca_aplikacijaModel.role">
-              <MappingFragment StoreEntitySet="roles">
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="role_name" ColumnName="role_name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="treca_aplikacijaModel.user">
+            <EntityTypeMapping TypeName="treca_aplikacija_modelModel.user">
               <MappingFragment StoreEntitySet="users">
                 <ScalarProperty Name="users_id" ColumnName="users_id" />
                 <ScalarProperty Name="user_email" ColumnName="user_email" />
@@ -538,7 +412,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="videos">
-            <EntityTypeMapping TypeName="treca_aplikacijaModel.video">
+            <EntityTypeMapping TypeName="treca_aplikacija_modelModel.video">
               <MappingFragment StoreEntitySet="video">
                 <ScalarProperty Name="video_id" ColumnName="video_id" />
                 <ScalarProperty Name="video_name" ColumnName="video_name" />
@@ -554,7 +428,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="video_like_dislike">
-            <EntityTypeMapping TypeName="treca_aplikacijaModel.video_like_dislike">
+            <EntityTypeMapping TypeName="treca_aplikacija_modelModel.video_like_dislike">
               <MappingFragment StoreEntitySet="video_like_dislike">
                 <ScalarProperty Name="video_id" ColumnName="video_id" />
                 <ScalarProperty Name="users_id" ColumnName="users_id" />
@@ -562,22 +436,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="users_following" TypeName="treca_aplikacijaModel.users_following" StoreEntitySet="users_following">
-            <EndProperty Name="users">
-              <ScalarProperty Name="users_id" ColumnName="user_following" />
-            </EndProperty>
-            <EndProperty Name="users1">
-              <ScalarProperty Name="users_id" ColumnName="user_followed" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="users_role" TypeName="treca_aplikacijaModel.users_role" StoreEntitySet="users_role">
-            <EndProperty Name="roles">
-              <ScalarProperty Name="role_id" ColumnName="role_id" />
-            </EndProperty>
-            <EndProperty Name="users">
-              <ScalarProperty Name="users_id" ColumnName="users_id" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

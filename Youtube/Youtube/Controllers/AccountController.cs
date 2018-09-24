@@ -190,6 +190,7 @@ namespace Youtube.Controllers
                 newUser.user_username = model.Username;
                 newUser.user_password = model.Password;
                 newUser.user_created = DateTime.Now;
+                newUser.user_icon = "Avatar.png";
                 db.users.Add(newUser);
                 db.SaveChanges();
 
@@ -311,6 +312,12 @@ namespace Youtube.Controllers
 
         public ActionResult Edit(string username)
         {
+
+            if(!User.Identity.GetApplicationUserUsername().Equals(username) || User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+
             using (treca_aplikacija_model db = new treca_aplikacija_model())
             {
                 //string loggedInUser = User.Identity.GetApplicationUserUsername();

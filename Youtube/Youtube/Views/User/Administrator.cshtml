@@ -1,13 +1,21 @@
 ﻿
 @{
+    Layout = "~/Views/Shared/_AdministratorLayout.cshtml";
     ViewBag.Title = "Administrator";
 }
 
-<div class="row" style="text-align:center;margin:5em 0 2em 0;"> <h2>Search user or video</h2></div>
-<div class="row">
+
+<div class="row" style="margin-top:8em;">
     <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <div class="input-group">
+    <div class="col-md-6" style="text-align:center;">
+        <div class="row">
+            <div class="col-md-4" style="text-align:right;"><p style="color:#f3f3f3;padding-top:4em;opacity:0.8;">WELCOME</p></div>
+            <div class="col-md-4"><img src="~/Content/Pictures/darkside.jpg" style="max-height:10em;" /></div>
+            <div class="col-md-4" style="text-align:left;"><p style="color:#f3f3f3;padding-top:4em;opacity:0.8;">SINNER</p></div>
+
+        </div>
+        
+        <div class="input-group" style="margin-top:3em;">
             <input id="AdminSearchParam" type="text" class="form-control" aria-label="..." placeholder="Search">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by <span class="caret"></span></button>
@@ -20,9 +28,10 @@
     </div>
 </div>
 <div class="row">
-    <div id="AdminEntitiesContainer" class="col-md-12" style="margin-top:2em;">
-
-    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-6"><div id="AdminEntitiesContainer" class="col-md-12" style="margin:2em 0 0 0;padding:0;"></div></div>
+    <div class="col-md-3"></div>
+    
 </div>
 <div class="col-md-3"></div>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>

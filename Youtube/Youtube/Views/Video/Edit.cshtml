@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2 style="margin-top:2em;">Edit video</h2>
 
 
 @using (Html.BeginForm("Edit", "Video", FormMethod.Post, new { enctype ="multipart/form-data" }))
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>video</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.video_id)
@@ -20,7 +19,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.video_name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.video_name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.video_name, new { htmlAttributes = new { @class = "form-control", style = "width:40%", required = "required" } })
             @Html.ValidationMessageFor(model => model.video_name, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -28,7 +27,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.video_description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.video_description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.video_description, new { htmlAttributes = new { @class = "form-control", style = "width:40%", required = "required" } })
             @Html.ValidationMessageFor(model => model.video_description, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -43,7 +42,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.video_url, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.video_url, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.video_url, new { htmlAttributes = new { @class = "form-control", style = "width:40%", required = "required" } })
             @Html.ValidationMessageFor(model => model.video_url, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -65,10 +64,6 @@
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

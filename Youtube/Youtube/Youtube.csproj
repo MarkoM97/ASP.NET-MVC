@@ -239,9 +239,6 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Model_Extensions\IdentityExtensions.cs" />
-    <Compile Include="Models\role.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\user.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -262,10 +259,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Pictures\create.png" />
+    <Content Include="Content\Pictures\darkside.jpg" />
     <Content Include="Content\Pictures\dislike.png" />
     <Content Include="Content\Pictures\disliked.png" />
+    <Content Include="Content\Pictures\giphy.gif" />
     <Content Include="Content\Pictures\like.png" />
     <Content Include="Content\Pictures\liked.png" />
+    <Content Include="Content\Pictures\Unauthorized.gif" />
     <Content Include="Content\UserPhotos\1.jpg" />
     <Content Include="Content\UserPhotos\2.jpg" />
     <Content Include="Content\UserPhotos\26.png" />
@@ -342,6 +343,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\My_Scripts\Comment_Pagination-Sorting.js" />
     <Content Include="Scripts\RatingButtons.js" />
     <Content Include="Scripts\Sorting_Filtering.js" />
     <Content Include="Web.config" />
@@ -396,6 +398,7 @@
     <Content Include="Views\Video\Edit.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Account\Unauthorized.cshtml" />
+    <Content Include="Views\Shared\_AdministratorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

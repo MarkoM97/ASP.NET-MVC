@@ -27,7 +27,6 @@ namespace Youtube.Models
     
         public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<comment_like_dislike> comment_like_dislike { get; set; }
-        public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<video> videos { get; set; }
         public virtual DbSet<video_like_dislike> video_like_dislike { get; set; }

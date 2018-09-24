@@ -22,7 +22,7 @@
                     @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
 
-                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", style = "width:50%;" })
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", style = "width:50%;", required = "required" })
                         @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
 
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "width:50%;" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "width:50%;", required = "required" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
